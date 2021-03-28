@@ -2,7 +2,7 @@ name: Start Site
 on:
   push:
     branches:
-      - master
+      - main
     tags:
       - "!*"
 
