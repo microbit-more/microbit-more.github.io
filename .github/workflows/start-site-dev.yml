@@ -44,7 +44,7 @@ jobs:
         with:
           repository: microbit-more/microbit-more-doc
           path: ./microbit-more-doc
-      - run: cp -r ./microbit-more-doc/docs ./public
+      - run: cp -r ./microbit-more-doc/docs/* ./public
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
