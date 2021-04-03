@@ -49,7 +49,7 @@ jobs:
         with:
           repository: microbit-more/microbit-more.github.io
           path: ./microbit-more.github.io
-      - run: cp ./microbit-more.github.io/README.md ./public
+      - run: cp ./microbit-more.github.io/site/index.html ./public
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
