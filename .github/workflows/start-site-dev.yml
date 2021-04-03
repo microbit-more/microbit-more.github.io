@@ -36,7 +36,11 @@ jobs:
         working-directory: ./scratch-gui
       - run: cp ./mbit-more-v2/site/index.html ./scratch-gui/build/index.html
       - run: cp ./mbit-more-v2/site/favicon.ico ./scratch-gui/build/static/favicon.ico
-      - run: mkdir -p ./public
+      - uses: actions/checkout@v2
+        with:
+          repository: microbit-more/microbit-more.github.io
+          path: ./microbit-more.github.io
+      - run: mv -T ./microbit-more.github.io/site ./public
       - run: mv -T ./scratch-gui/build ./public/editor
       - run: mv -T ./mbit-more-v2/dist ./public/dist
       - run: mv -T ./mbit-more-v2/examples ./public/examples
@@ -45,11 +49,7 @@ jobs:
           repository: microbit-more/microbit-more-doc
           path: ./microbit-more-doc
       - run: mv -T ./microbit-more-doc/docs ./public/docs
-      - uses: actions/checkout@v2
-        with:
-          repository: microbit-more/microbit-more.github.io
-          path: ./microbit-more.github.io
-      - run: cp ./microbit-more.github.io/site/index.html ./public
+      - run: mv -T ./microbit-more-doc/docs-ja ./public/docs-ja
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
