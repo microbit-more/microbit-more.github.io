@@ -8279,7 +8279,7 @@ var translationMap = {
 var entry = {
   name: 'micro:bit MORE',
   extensionId: 'microbitMore',
-  extensionURL: 'https://yokobond.github.io/mbit-more-v2/dist/microbitMore.mjs',
+  extensionURL: 'https://microbit-more.github.io/dist/microbitMore.mjs',
   collaborator: 'Yengawa Lab',
   iconURL: img$3,
   insetIconURL: img$2,
@@ -14763,7 +14763,7 @@ var EXTENSION_ID = 'microbitMore';
  * @type {string}
  */
 
-var extensionURL = 'https://yokobond.github.io/mbit-more-v2/dist/microbitMore.mjs';
+var extensionURL = 'https://microbit-more.github.io/dist/microbitMore.mjs';
 /**
  * Icon png to be displayed at the left edge of each extension block, encoded as a data URI.
  * @type {string}
