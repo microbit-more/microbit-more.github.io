@@ -8277,7 +8277,7 @@ var translationMap = {
   }
 };
 var entry = {
-  name: 'micro:bit MORE',
+  name: 'Microbit More',
   extensionId: 'microbitMore',
   extensionURL: 'https://microbit-more.github.io/dev/dist/microbitMore.mjs',
   collaborator: 'Yengawa Lab',
@@ -8285,7 +8285,7 @@ var entry = {
   insetIconURL: img$2,
   description: /*#__PURE__*/react.createElement(FormattedMessage, {
     defaultMessage: "Play with all functions of micro:bit.",
-    description: "Description for the 'micro:bit MORE' extension",
+    description: "Description for the 'Microbit More' extension",
     id: "gui.extension.microbitMore.description"
   }),
   featured: true,
@@ -16389,14 +16389,14 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
         text: formatMessage({
           id: 'mbitMore.buttonIDMenu.a',
           default: 'A',
-          description: 'label for "A" element in button picker for micro:bit more extension'
+          description: 'label for "A" element in button picker for Microbit More extension'
         }),
         value: MbitMoreButtonName.A
       }, {
         text: formatMessage({
           id: 'mbitMore.buttonIDMenu.b',
           default: 'B',
-          description: 'label for "B" element in button picker for micro:bit more extension'
+          description: 'label for "B" element in button picker for Microbit More extension'
         }),
         value: MbitMoreButtonName.B
       }];
@@ -16467,7 +16467,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
         text: formatMessage({
           id: 'mbitMore.touchIDMenu.logo',
           default: 'LOGO',
-          description: 'label for "LOGO" element in touch button picker for micro:bit more extension'
+          description: 'label for "LOGO" element in touch button picker for Microbit More extension'
         }),
         value: MbitMoreButtonName.LOGO
       }, {
@@ -17613,7 +17613,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
 
       return this._peripheral.configMic(true, util).then(function (micState) {
         if (micState) {
-          return _this16._peripheral.readSoundLevel();
+          return Math.round(_this16._peripheral.readSoundLevel() * 1000 / 255) / 10;
         }
 
         return 0;
@@ -18060,7 +18060,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @return {string} - the name of this extension.
      */
     function get() {
-      return 'micro:bit more';
+      return 'Microbit More';
     }
     /**
      * @return {string} - the ID of this extension.
