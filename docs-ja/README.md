@@ -9,3 +9,7 @@ Microbit More は教育向けプログラミング環境 Scratch (スクラッ�
 ## 使い方
 
 [使い方](setup)
+
+## 開発
+
+[開発情報](devInfo)

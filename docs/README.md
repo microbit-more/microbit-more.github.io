@@ -10,3 +10,7 @@
 ## Setup
 
 [Ho to Setup](setup)
+
+## 開発
+
+[Development Information](devInfo)
