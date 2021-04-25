@@ -1,4 +1,4 @@
-# Microbit More
+# What is Microbit More
 
 'Microbit More' is a mod programming environment from [Scratch by MIT](https://scratch.mit.edu/).
       You can code using extended blocks of 'Microbit More' in the normal Scratch's way.
