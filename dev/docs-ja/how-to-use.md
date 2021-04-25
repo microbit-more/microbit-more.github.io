@@ -19,7 +19,7 @@ Microbit More 用プログラム [microbit-mbit-more-v2-0_2_0.hex](https://githu
 
 ### 2. micro:bit を探す
 
-'micro:bit more' カテゴリのコネクトボタンを押して、近くにある Microbit More の書き込まれた micro:bit を探します。
+'Microbit More' カテゴリのコネクトボタンを押して、近くにある Microbit More の書き込まれた micro:bit を探します。
 
 ### 3. micro:bit を選ぶ
 
