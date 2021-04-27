@@ -32,7 +32,7 @@ a:hover{
 a.btn{
 	color: #fff;
 	border-radius: 4px;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	background-color: #2196F3;
 	font-weight: 800;
 	text-align: center;
@@ -201,6 +201,15 @@ header nav li:last-child{
 	padding: 20px 46px;
 }
 
+.hero a.btn-s{
+	padding: 8px 16px;
+}
+
+.hero hr{
+	width: 80%;
+	height: 1px;
+}
+
 @media (max-width: 800px){
 
 	.hero{
@@ -219,6 +228,9 @@ header nav li:last-child{
 		padding: 15px 40px;
 	}
 
+	.hero a.btn-s{
+		padding: 4px 8px;
+	}
 }
 
 
