@@ -5,7 +5,7 @@
 ### 1. micro:bit にプログラムを書き込む
 micro:bit をUSBケーブルでパソコンにつないで、最新の Microbit More 用プログラム を micro:bit へ書き込みます。(micro:bit へのプログラム書き込みは最初の1回だけで、以降は Scratch の操作のみでつなぐことができます。)
 
-Microbit More 用プログラム [microbit-mbit-more-v2-0_2_1.hex](https://github.com/yokobond/pxt-mbit-more-v2/releases/download/0.2.1/microbit-mbit-more-v2-0_2_1.hex)
+Microbit More 用プログラム [microbit-mbit-more-v2-0_2_0.hex](https://github.com/yokobond/pxt-mbit-more-v2/releases/download/0.2.0/microbit-mbit-more-v2-0_2_0.hex)
 
 ### 2. micro:bit の方角センサーを調整する
 プログラムを書き込んだ直後は方角センサーを調整するために、LED画面に「TILT TO FILL SCREEN」と表示されます。 micro:bit を前後左右に傾けて、すべてのLEDが光っている状態にしてください。(この調整を完了するまでスクラッチをつなぐことはできません。)
@@ -14,7 +14,7 @@ Microbit More 用プログラム [microbit-mbit-more-v2-0_2_1.hex](https://githu
 
 ### 1. Microbit More を開く
 
-ウェブブラウザで https://microbit-more.github.io/editor を開きます。
+ウェブブラウザで https://microbit-more.github.io/ を開きます。
 (Web Bluetooth API に対応していないブラウザ(FireFox や Safari など)で使うときは、そのパソコンに [Scratch Link](https://scratch.mit.edu/microbit) をインストールして動かしておいてください。)
 
 ### 2. micro:bit を探す
