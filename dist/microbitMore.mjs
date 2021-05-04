@@ -17616,7 +17616,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
 
       return this._peripheral.configMic(true, util).then(function (micState) {
         if (micState) {
-          return _this16._peripheral.readSoundLevel();
+          return Math.round(_this16._peripheral.readSoundLevel() * 1000 / 255) / 10;
         }
 
         return 0;
