@@ -17545,7 +17545,10 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
       var delay = parseInt(args.DELAY, 10);
       delay = isNaN(delay) ? 120 : delay; // Use default delay if NaN.
 
-      if (text.length > 0) this._peripheral.displayText(text, delay, util);
+      var resultPromise = this._peripheral.displayText(text, delay, util);
+
+      if (!resultPromise) return; // This thread was yielded.
+
       var yieldDelay = delay * (6 * text.length + 6);
       return new Promise(function (resolve) {
         setTimeout(function () {
@@ -17614,7 +17617,11 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
     value: function getSoundLevel(args, util) {
       var _this16 = this;
 
-      return this._peripheral.configMic(true, util).then(function (micState) {
+      var resultPromise = this._peripheral.configMic(true, util);
+
+      if (!resultPromise) return; // This thread was yielded.
+
+      return resultPromise.then(function (micState) {
         if (micState) {
           return Math.round(_this16._peripheral.readSoundLevel() * 1000 / 255) / 10;
         }
