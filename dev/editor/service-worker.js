@@ -4137,10 +4137,10 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "a93ba32a67950f762bc5343e6a24d3ab"
   }, {
     "url": "lib.min.js",
-    "revision": "4dc81c72eba07666c91848b9158e529d"
+    "revision": "23e0200ca75fb9ef75fecd368911f531"
   }, {
     "url": "lib.min.js.map",
-    "revision": "fef2f91deaf8bd1eeaad02f8256ea326"
+    "revision": "69faddf8280b138a899a7ecf69d4b7da"
   }, {
     "url": "player.html",
     "revision": "36ca0ff4afd1a534052df6edb8800234"
@@ -4576,9 +4576,6 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
   }, {
     "url": "static/assets/af2202211ca1873edb949012dab6f9d1.svg",
     "revision": "af2202211ca1873edb949012dab6f9d1"
-  }, {
-    "url": "static/assets/b26220acbc02c8b75ae2640fcdf15a04.svg",
-    "revision": "b26220acbc02c8b75ae2640fcdf15a04"
   }, {
     "url": "static/assets/b2c44c738c9cbc1a99cd6edfd0c2b85b.svg",
     "revision": "b2c44c738c9cbc1a99cd6edfd0c2b85b"
