@@ -1,0 +1,47 @@
+{
+  "icons": [
+    {
+      "src": "icon_512x512.a1b81987ccbf22b684d82782b1d18343.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon_512x512.eb9fd533bc064e49e15f95e7c89e4110.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_384x384.4a610f86daaafa1f4036ac9216dfe2b4.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_256x256.a8fc297124486009f3222928ece4428e.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_192x192.28a4cdaf02b9330d5151125786eee476.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_128x128.5fcef205cbbd8c73b87cc599df21f219.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "icon_96x96.3cb390a6fd8c54ab0a731d816e924b1a.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "name": "Microbit More",
+  "short_name": "Microbit More",
+  "orientation": "any",
+  "display": "standalone",
+  "start_url": ".",
+  "description": "Scratch3 mod for micro:bit",
+  "background_color": "#ffffff"
+}

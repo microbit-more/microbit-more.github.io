@@ -111,7 +111,7 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "a877fb1e9a4260e9c995abbbdb054920"
   }, {
     "url": "blocks-only.html",
-    "revision": "8124a41177d92a27bd140a61da085176"
+    "revision": "adba19ed6746f4b692afc48665e87ed3"
   }, {
     "url": "chunks/blocksonly.js",
     "revision": "95531038cfa411c4a9204d64f40f04bf"
@@ -138,7 +138,7 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "bd44dc4763ac0550cc55cf30412555b7"
   }, {
     "url": "compatibility-testing.html",
-    "revision": "b78913db197221d52498e7856d5301ec"
+    "revision": "bc200f2678114e50d2bb8c2bf9dc0765"
   }, {
     "url": "https://assets.scratch.mit.edu/internalapi/asset/0015433a406a53f00b792424b823268c.png/get/",
     "revision": "0015433a406a53f00b792424b823268c"
@@ -4134,16 +4134,16 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "ff8b8c3bf841a11fd5fe3afaa92be1b5"
   }, {
     "url": "index.html",
-    "revision": "86ac5fa2b59094f2d2cd4662524c0b55"
+    "revision": "a93ba32a67950f762bc5343e6a24d3ab"
   }, {
     "url": "lib.min.js",
-    "revision": "5fecb75f30ce96698b16f2af2b3f0869"
+    "revision": "4dc81c72eba07666c91848b9158e529d"
   }, {
     "url": "lib.min.js.map",
-    "revision": "0016fc4b570f42cc18d5e96cc654074e"
+    "revision": "fef2f91deaf8bd1eeaad02f8256ea326"
   }, {
     "url": "player.html",
-    "revision": "a31484c41299508c6ec7243ad45f240a"
+    "revision": "36ca0ff4afd1a534052df6edb8800234"
   }, {
     "url": "static/assets/0136d7b1618e6d7ecaf97717bd128a05.jpg",
     "revision": "0136d7b1618e6d7ecaf97717bd128a05"
@@ -4210,9 +4210,6 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
   }, {
     "url": "static/assets/1dfe5425b42628b6f1df1f39e97a319f.svg",
     "revision": "1dfe5425b42628b6f1df1f39e97a319f"
-  }, {
-    "url": "static/assets/1e9652bec24bcaacf5285be19746a750.svg",
-    "revision": "1e9652bec24bcaacf5285be19746a750"
   }, {
     "url": "static/assets/1fa6345d57ffc67eccd9f44cf6a383dd.svg",
     "revision": "1fa6345d57ffc67eccd9f44cf6a383dd"
@@ -4579,6 +4576,9 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
   }, {
     "url": "static/assets/af2202211ca1873edb949012dab6f9d1.svg",
     "revision": "af2202211ca1873edb949012dab6f9d1"
+  }, {
+    "url": "static/assets/b26220acbc02c8b75ae2640fcdf15a04.svg",
+    "revision": "b26220acbc02c8b75ae2640fcdf15a04"
   }, {
     "url": "static/assets/b2c44c738c9cbc1a99cd6edfd0c2b85b.svg",
     "revision": "b2c44c738c9cbc1a99cd6edfd0c2b85b"
@@ -4974,13 +4974,13 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "15c01eb94658c32b995b97aea18aca08"
   }, {
     "url": "static/favicon.ico",
-    "revision": "e9b6a0a182aad756160d2301d2b0a374"
+    "revision": "3ff181ef22995f3ce56908d55ab959b9"
   }, {
     "url": "static/pwa-icon.png",
-    "revision": "6a57c009a4747963c9f1ca6d9f4da140"
+    "revision": "02adcdb2b458adb3e027a92286e35d1d"
   }, {
     "url": "static/pwa-maskable_icon.png",
-    "revision": "578e75dc4330002a3bebd8dcf12836aa"
+    "revision": "81f32c894f9f23538048df676fedb6bd"
   }], {});
 
 });
