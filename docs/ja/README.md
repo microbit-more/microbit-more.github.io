@@ -10,7 +10,7 @@ Microbit More は教育向けプログラミング環境 Scratch (スクラッ�
 
 ### micro:bit
 
-micro:bit v1.5, v2.0 で利用できます。
+micro:bit v1.3, v1.5, v2.0 で利用できます。
 
 ただし、micro:bit v1.5 は、メモリー容量が少ないために「データ通信」関係のブロックは使えません。
 
@@ -33,3 +33,8 @@ micro:bit v1.5, v2.0 で利用できます。
 
 #### iPad
 - [Bluefy](https://apps.apple.com/jp/app/bluefy-web-ble-browser/id1492822055) (ただし、プロジェクトを保存できません。)
+
+## 変更履歴
+
+- [Releases · yokobond/mbit-more-v2](https://github.com/yokobond/mbit-more-v2/releases)
+- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/yokobond/pxt-mbit-more-v2/releases)
