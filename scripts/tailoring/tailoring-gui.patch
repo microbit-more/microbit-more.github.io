@@ -1,0 +1,59 @@
+diff --git a/src/components/stage-header/stage-header.jsx b/src/components/stage-header/stage-header.jsx
+index 4084f6bfc..86d43eb8f 100644
+--- a/src/components/stage-header/stage-header.jsx
++++ b/src/components/stage-header/stage-header.jsx
+@@ -68,7 +68,7 @@ const StageHeaderComponent = function (props) {
+         const stageButton = showBranding ? (
+             <div className={styles.embedScratchLogo}>
+                 <a
+-                    href="https://scratch.mit.edu"
++                    href="https://microbit-more.github.io/"
+                     rel="noopener noreferrer"
+                     target="_blank"
+                 >
+diff --git a/src/playground/render-gui.jsx b/src/playground/render-gui.jsx
+index 91a492d1c..743cf44b6 100644
+--- a/src/playground/render-gui.jsx
++++ b/src/playground/render-gui.jsx
+@@ -8,7 +8,7 @@ import HashParserHOC from '../lib/hash-parser-hoc.jsx';
+ import log from '../lib/log.js';
+ 
+ const onClickLogo = () => {
+-    window.location = 'https://scratch.mit.edu';
++    window.location = 'https://microbit-more.github.io/';
+ };
+ 
+ const handleTelemetryModalCancel = () => {
+diff --git a/webpack.config.js b/webpack.config.js
+index 5278b9944..3e6cf1418 100644
+--- a/webpack.config.js
++++ b/webpack.config.js
+@@ -142,7 +142,7 @@ module.exports = [
+             new HtmlWebpackPlugin({
+                 chunks: ['lib.min', 'gui'],
+                 template: 'src/playground/index.ejs',
+-                title: 'Xcratch',
++                title: 'Microbit More',
+                 sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
+             }),
+             new HtmlWebpackPlugin({
+@@ -190,15 +190,15 @@ module.exports = [
+                 maximumFileSizeToCacheInBytes: 32 * 1024 * 1024
+             }),
+             new WebpackPwaManifest({
+-                name: 'Xcratch',
+-                short_name: 'Xcratch',
+-                description: 'Extendable Scratch3 mod',
++                name: 'Microbit More',
++                short_name: 'Microbit More',
++                description: 'Scratch3 mod for micro:bit',
+                 background_color: '#ffffff',
+                 orientation: 'any',
+                 crossorigin: 'use-credentials',
+                 inject: true,
+                 ios: {
+-                    'apple-mobile-web-app-title': 'Xcratch',
++                    'apple-mobile-web-app-title': 'Microbit More',
+                     'apple-mobile-web-app-status-bar-style': 'default'
+                 },
+                 icons: [
