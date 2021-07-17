@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: yokobond/mbit-more-v2
-          ref: develop
+          ref: master
           path: ./mbit-more-v2
       - run: node ./scripts/register.js --id=microbitMore --gui=../scratch-gui --url="https://microbit-more.github.io/dev/dist/microbitMore.mjs" -C
         working-directory: ./mbit-more-v2
