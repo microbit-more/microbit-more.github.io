@@ -32,9 +32,9 @@ micro:bit v1.3, v1.5, v2.0 で利用できます。
 - Safari (Scratch Link利用)
 
 #### iPad
-- [Bluefy](https://apps.apple.com/jp/app/bluefy-web-ble-browser/id1492822055) (ただし、プロジェクトを保存できません。)
+- [‎Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>設定画面のホームURL「カスタム」に https://microbit-more.github.io/editor/ と入力します。
 
 ## 変更履歴
 
-- [Releases · yokobond/mbit-more-v2](https://github.com/yokobond/mbit-more-v2/releases)
-- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/yokobond/pxt-mbit-more-v2/releases)
+- [Releases · microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2/releases)
+- [Releases · microbit-more/pxt-mbit-more-v2](https://github.com/microbit-more/pxt-mbit-more-v2/releases)

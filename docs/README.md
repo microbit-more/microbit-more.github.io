@@ -33,9 +33,9 @@ However, the micro:bit v1.5 cannot use blocks related to "data communication" du
 - Safari (Using Scratch Link)
 
 #### iPad
-- [Bluefy](https://apps.apple.com/jp/app/bluefy-web-ble-browser/id1492822055) (However, you will not be able to save the project.)
+- [‎Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>Enter https://microbit-more.github.io/editor/ in the Home URL "Custom" field in the Settings screen.
 
 ## Changes
 
-- [Releases · yokobond/mbit-more-v2](https://github.com/yokobond/mbit-more-v2/releases)
-- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/yokobond/pxt-mbit-more-v2/releases)
+- [Releases · microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2/releases)
+- [Releases · microbit-more/pxt-mbit-more-v2](https://github.com/microbit-more/pxt-mbit-more-v2/releases)

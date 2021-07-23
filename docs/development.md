@@ -8,7 +8,7 @@ Please report of issues or improvements 'Scratch Extension' repository.
 
 Microbit More is developing on the following repositories.
 
-Scratch Extension : https://github.com/yokobond/mbit-more-v2
+Scratch Extension : https://github.com/microbit-more/mbit-more-v2
 
-MakeCode Extension : https://github.com/yokobond/pxt-mbit-more-v2
+MakeCode Extension : https://github.com/microbit-more/pxt-mbit-more-v2
 
