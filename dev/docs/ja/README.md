@@ -36,5 +36,5 @@ micro:bit v1.3, v1.5, v2.0 で利用できます。
 
 ## 変更履歴
 
-- [Releases · yokobond/mbit-more-v2](https://github.com/yokobond/mbit-more-v2/releases)
-- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/yokobond/pxt-mbit-more-v2/releases)
+- [Releases · yokobond/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2/releases)
+- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/microbit-more/pxt-mbit-more-v2/releases)

@@ -37,5 +37,5 @@ However, the micro:bit v1.5 cannot use blocks related to "data communication" du
 
 ## Changes
 
-- [Releases · yokobond/mbit-more-v2](https://github.com/yokobond/mbit-more-v2/releases)
-- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/yokobond/pxt-mbit-more-v2/releases)
+- [Releases · yokobond/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2/releases)
+- [Releases · yokobond/pxt-mbit-more-v2](https://github.com/microbit-more/pxt-mbit-more-v2/releases)
