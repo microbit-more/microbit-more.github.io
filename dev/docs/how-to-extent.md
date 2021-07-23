@@ -9,7 +9,7 @@ The micro:bit communicates with Scratch by sending and receiving labeled data be
 - There are 16 types of labels that can be received by the micro:bit.
 
 ## micro:bit side program
-Open the MakeCode project [mbit-more-v2-0_2_0](https://makecode.microbit.org/_U9F49zPkEHLz) that contains Microbit More and edit the program. (It will take about 3 minutes to compile.)
+Open the MakeCode project [mbit-more-v2-0_2_2](https://makecode.microbit.org/_6Dsggo9oc9ce) that contains Microbit More and edit the program. (It will take about 3 minutes to compile.)
 
 The following block in MakeCode can be used to exchange data with Scratch.
 
