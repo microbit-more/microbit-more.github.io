@@ -1,0 +1,12 @@
+{
+  "name": "microbit-more.github.io",
+  "version": "0.1.0",
+  "description": "Full-functional extension of micro:bit for Scratch3",
+  "module": "./dist/microbitMore.mjs",
+  "scripts": {
+    "setup:local": "node ./scripts/setup-local.js && node ./scripts/tailoring.js -gui=\"../scratch-gui\"",
+    "start:local": "cd ../scratch-gui && npm run start -- --https",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {}
+}
