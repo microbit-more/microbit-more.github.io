@@ -27,13 +27,9 @@ jobs:
           repository: microbit-more/mbit-more-v2
           ref: master
           path: ./mbit-more-v2
-      - run: node ./scripts/register.js --id=microbitMore --gui=../scratch-gui --url="https://microbit-more.github.io/dist/microbitMore.mjs" -C
+      - run: npx xcratch-register --link -C --id=microbitMore --gui=../scratch-gui --url="https://microbit-more.github.io/dist/microbitMore.mjs"
         working-directory: ./mbit-more-v2
-      - run: npm install
-        working-directory: ./mbit-more-v2
-      - run: rm -rf ./dist && mkdir -p ./dist
-        working-directory: ./mbit-more-v2
-      - run: node ./scripts/build.js --name=microbitMore --url="https://microbit-more.github.io/dist/microbitMore.mjs" --block=./src/block --entry=./src/entry --vm=../scratch-gui/node_modules/scratch-vm --gui=../scratch-gui --output=./dist
+      - run: npx xcratch-build --module=microbitMore --url="https://microbit-more.github.io/dist/microbitMore.mjs" --gui=../scratch-gui
         working-directory: ./mbit-more-v2
       - uses: actions/checkout@v2
         with:
