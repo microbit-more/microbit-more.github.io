@@ -5,7 +5,7 @@
 ### 1. micro:bit にプログラムを書き込む
 micro:bit をUSBケーブルでパソコンにつないで、最新の Microbit More 用プログラム を micro:bit へ書き込みます。(micro:bit へのプログラム書き込みは最初の1回だけで、以降は Scratch の操作のみでつなぐことができます。)
 
-Microbit More 用プログラム [microbit-mbit-more-v2-0_2_3.hex](https://github.com/microbit-more/pxt-mbit-more-v2/releases/download/0.2.3/microbit-mbit-more-v2-0_2_3.hex)
+Microbit More 用プログラム [microbit-mbit-more-v2-0_2_4.hex](https://github.com/microbit-more/pxt-mbit-more-v2/releases/download/0.2.4/microbit-mbit-more-v2-0_2_4.hex)
 
 ### 2. micro:bit の方角センサーを調整する
 プログラムを書き込んだ直後は方角センサーを調整するために、LED画面に「TILT TO FILL SCREEN」と表示されます。 micro:bit を前後左右に傾けて、すべてのLEDが光っている状態にしてください。(この調整を完了するまでスクラッチをつなぐことはできません。)
@@ -35,22 +35,9 @@ Microbit More 用プログラム [microbit-mbit-more-v2-0_2_3.hex](https://githu
 ____
 ## オフラインで使う
 
-Microbit MoreエディターはPWA(Progressive Web Apps)になっているので、オフラインで利用できます。
+Microbit More エディターは PWA(Progressive Web Apps) になっているので、オフラインで利用できます。
 エディター( https://microbit-more.github.io/editor )を開いて2分ほど置いておくと、アドレスバーにインストールボタンが現れます。
 
 ![](microbit_more-install_button.png ':size=400')
 
-インストールボタンが現れた後はエディターがブラウザにまるごとキャッシュされているので、たとえインストールしなくても、ネットアクセス無しでScratchを利用できるようになっています。
-
-
-____
-## USBでつなぐ
-
-「シフト」キーを押しながら接続ボタンを押すと、USB接続を選択できます。
-(micro:bit v2、[microbit-mbit-more-v2-0_2_2.hex ](https://github.com/microbit-more/pxt-mbit-more-v2/releases/tag/0.2.2) 以降)
-
-[Web Serial API](https://wicg.github.io/serial/) を利用しているので、現在のところ利用できるのは Chromebook/Mac/Windows の Chrome/Edge だけです。
-
-***注意***
-現在のバージョンでは通信が不安定です。
-センサーの値は利用できますが、アナログレベルやLED表示などの命令を伴うブロックを連続して使うと10分程で通信が不通になります。
+インストールボタンが現れた後はエディターがブラウザにまるごとキャッシュされているので、たとえインストールしなくても、ネットアクセス無しで Microbit More を利用できるようになっています。
