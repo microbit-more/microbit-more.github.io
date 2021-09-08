@@ -34,7 +34,51 @@ However, the micro:bit v1.3, v1.5 cannot use blocks related to "data communicati
 
 #### iPad
 - [‎Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>Enter https://microbit-more.github.io/editor/ in the Home URL "Custom" field in the Settings screen.
+____
+## Features
 
+### Available micro:bit functions
+
+The following functions can be used in block programming.
+<!-- (See [Blocks](blocks "Block Details") for details.) -->
+
+Input
+
+- Brightness
+- Temperature
+- Azimuth
+- Magnetic force
+- Direction
+- Acceleration
+- Gesture
+- Digital Inputs
+- Analog Inputs
+- Digital pulse/edge events
+- A/B buttons
+- LOGO touch button (v2 only)
+- Loudness (v2 only)
+
+
+Outputs
+
+- Digital outputs
+- Analog outputs
+- Servo motor
+- Display picture on LED
+- Display text on LED
+- Play a sound with a specified frequency
+
+Extensions
+
+- Extensions by MakeCode
+
+
+### Can be used offline
+
+The Microbit More editor is a PWA (Progressive Web Apps), so you can use it offline.
+(See [how-to-use](how-to-use?id=use-it-offline))
+
+____
 ## Changes
 
 - [Releases · microbit-more/mbit-more-v2](https://github.com/microbit-more/mbit-more-v2/releases)

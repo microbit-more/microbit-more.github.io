@@ -81,7 +81,7 @@ if (!self.define) {
     });
   };
 }
-define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use strict';
+define("./service-worker.js",['./workbox-9cb17bc4'], function (workbox) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -126,16 +126,16 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "8f44a83bc2884a3b22bf5cef34606bfb"
   }, {
     "url": "chunks/gui.js",
-    "revision": "7584b4f99da21d9a32d1b02cfb5ba8b9"
+    "revision": "8cd5d747932149b355939cead22dc4c2"
   }, {
     "url": "chunks/gui.js.map",
-    "revision": "c927f7f132d52f6066dbca9c5adc0e3a"
+    "revision": "3f01e4470e4e61df481981bd848078e9"
   }, {
     "url": "chunks/player.js",
-    "revision": "57d3ca68e0b73389a20288438858d608"
+    "revision": "90a5d5f3983a78552181a78aa0e74ff0"
   }, {
     "url": "chunks/player.js.map",
-    "revision": "bd44dc4763ac0550cc55cf30412555b7"
+    "revision": "b29852eae60ebb2d5390bdb279168b15"
   }, {
     "url": "compatibility-testing.html",
     "revision": "bc200f2678114e50d2bb8c2bf9dc0765"
@@ -4137,10 +4137,10 @@ define("./service-worker.js",['./workbox-2a8a8a96'], function (workbox) { 'use s
     "revision": "a93ba32a67950f762bc5343e6a24d3ab"
   }, {
     "url": "lib.min.js",
-    "revision": "ebf3e751faa9b86846bd6fa8c3d2d464"
+    "revision": "6bd266165fc51286f4848f6acbde9577"
   }, {
     "url": "lib.min.js.map",
-    "revision": "d651eac53b3a985cc59c4203c2551497"
+    "revision": "7d6b872b5de8444e9abae3ebbede933f"
   }, {
     "url": "player.html",
     "revision": "36ca0ff4afd1a534052df6edb8800234"
