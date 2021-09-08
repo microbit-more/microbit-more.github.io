@@ -9,7 +9,7 @@ var img = "data:image/svg+xml,%3c%3fxml version='1.0' encoding='UTF-8' standalon
 var formatMessage$1 = function formatMessage(messageData) {
   return messageData.defaultMessage;
 };
-var version = 'v2-0.2.3';
+var version = 'v2-0.2.4';
 var translationMap = {
   'en': {
     'gui.extension.microbitMore.description': "Play with all functions of micro:bit. (".concat(version, ")")
@@ -5432,7 +5432,7 @@ var MbitMore = /*#__PURE__*/function () {
      */
 
     this.sendCommandInterval = 30;
-    this.initConfig(); // keyboard monitor
+    this.initConfig(); // keyboard state monitor
 
     this.keyState = {};
     document.body.addEventListener('keydown', function (e) {
@@ -5557,7 +5557,7 @@ var MbitMore = /*#__PURE__*/function () {
       }], util);
     }
     /**
-     * Set pin to digital output mode and the level.
+     * Set pin to digital output mode on the level.
      * @param {number} pinIndex - Index of pin.
      * @param {boolean} level - Value in digital (true = High)
      * @param {BlockUtility} util - utility object provided by the runtime.
@@ -5574,7 +5574,7 @@ var MbitMore = /*#__PURE__*/function () {
       }], util);
     }
     /**
-     *
+     * Set the pin to PWM mode on the level.
      * @param {number} pinIndex - index of the pin
      * @param {number} level - value of analog output [0..1024].
      * @param {BlockUtility} util - utility object provided by the runtime.
@@ -5592,6 +5592,17 @@ var MbitMore = /*#__PURE__*/function () {
         message: new Uint8Array([pinIndex, dataView.getUint8(0), dataView.getUint8(1)])
       }], util);
     }
+    /**
+     * Set the pin to Servo mode on the angle in the range and center.
+     * @param {number} pinIndex - index of the pin.
+     * @param {number} angle - the level to set on the output pin, in the range 0 - 180.
+     * @param {number} range - the span of possible values. '0' means default(2000).
+     * @param {number} center - the center point from which to calculate the lower and upper bounds.
+     *                          '0' means default(1500).
+     * @param {BlockUtility} util - utility object provided by the runtime.
+     * @return {?Promise} a Promise that resolves when command sending done or undefined if this process was yield.
+     */
+
   }, {
     key: "setPinServo",
     value: function setPinServo(pinIndex, angle, range, center, util) {
@@ -5610,7 +5621,7 @@ var MbitMore = /*#__PURE__*/function () {
     /**
      * Read light level from the light sensor.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves light level.
+     * @return {number} - value of the light level [0..255].
      */
 
   }, {
@@ -5950,6 +5961,10 @@ var MbitMore = /*#__PURE__*/function () {
 
       return this.magneticForce[axis];
     }
+    /**
+     * Start to scan Bluetooth LE devices to find micro:bit with MicroBit More service.
+     */
+
   }, {
     key: "scanBLE",
     value: function scanBLE() {
@@ -5962,6 +5977,10 @@ var MbitMore = /*#__PURE__*/function () {
         }]
       }, this._onConnect, this.onDisconnect);
     }
+    /**
+     * Start to scan USB serial devices to find micro:bit v2.
+     */
+
   }, {
     key: "scanSerial",
     value: function scanSerial() {
@@ -5972,6 +5991,10 @@ var MbitMore = /*#__PURE__*/function () {
         }]
       }, this._onConnect, this.onDisconnect);
     }
+    /**
+     * Open dialog to selector communication route [BLE | USB Serial]
+     */
+
   }, {
     key: "selectCommunicationRoute",
     value: function selectCommunicationRoute() {
@@ -6060,7 +6083,7 @@ var MbitMore = /*#__PURE__*/function () {
         if (e.code === 'Enter') {
           selectProcess();
         }
-      }); // When click outside of the dialog
+      }); // Close when click outside of the dialog
       // selectDialog.onclick = e => {
       //     if (!e.target.closest('div')) {
       //         e.target.close();
@@ -6163,7 +6186,7 @@ var MbitMore = /*#__PURE__*/function () {
      * @param {object} command command to send.
      * @param {number} command.id ID of the command.
      * @param {Uint8Array} command.message Contents of the command.
-     * @return {Promise} a Promise that resolves when the data was sent.
+     * @return {Promise} a Promise that resolves when the data was sent and after send command interval.
      */
 
   }, {
@@ -6234,7 +6257,6 @@ var MbitMore = /*#__PURE__*/function () {
     }
     /**
      * Starts reading data from peripheral after BLE has connected to it.
-     * @private
      */
 
   }, {
@@ -6414,7 +6436,7 @@ var MbitMore = /*#__PURE__*/function () {
      * Configurate touch mode of the pin.
      * @param {number} pinIndex - index of the pin as a button.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves when configured or the process was yield.
+     * @return {?Promise} - a Promise that resolves when configured or undefined if the process was yield.
      */
 
   }, {
@@ -6441,7 +6463,7 @@ var MbitMore = /*#__PURE__*/function () {
         });
       }
 
-      return Promise.resolve();
+      return;
     }
     /**
      * Return whether the touche-pin is touched.
@@ -7749,12 +7771,14 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {string} args.NAME - name of the pin to catch.
      * @param {string} args.EVENT - event to catch.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves that resolves the touch state.
+     * @return {boolean|Promise<boolean>|undefined} - true if the event raised or promise that or undefinde if yield.
      */
 
   }, {
     key: "whenTouchEvent",
     value: function whenTouchEvent(args, util) {
+      var _this15 = this;
+
       var buttonName = args.NAME;
 
       if (buttonName === MbitMoreButtonName.LOGO) {
@@ -7765,21 +7789,27 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
         return this.whenButtonEvent(args);
       }
 
-      this._peripheral.configTouchPin(MbitMoreButtonPinIndex[buttonName], util);
+      var configPromise = this._peripheral.configTouchPin(MbitMoreButtonPinIndex[buttonName], util);
 
-      return false;
+      if (!configPromise) return; // This thread was yielded.
+
+      return configPromise.then(function () {
+        return _this15.whenButtonEvent(args);
+      });
     }
     /**
      * Test whether the touch-pin is touched.
      * @param {object} args - the block's arguments.
      * @param {string} args.NAME - name of the pin.
      * @param {object} util - utility object provided by the runtime.
-     * @return {boolean} - whether the button is pressed or not.
+     * @return {boolean|Promise<boolean>|undefined} - true if touched or promise that or undefinde if yield.
      */
 
   }, {
     key: "isPinTouched",
     value: function isPinTouched(args, util) {
+      var _this16 = this;
+
       var buttonName = args.NAME;
 
       if (buttonName === MbitMoreButtonName.LOGO) {
@@ -7790,9 +7820,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
         return this._peripheral.isTouched(buttonName);
       }
 
-      this._peripheral.configTouchPin(MbitMoreButtonPinIndex[buttonName], util);
+      var configPromise = this._peripheral.configTouchPin(MbitMoreButtonPinIndex[buttonName], util);
 
-      return false;
+      if (!configPromise) return; // This thread was yielded.
+
+      return configPromise.then(function () {
+        return _this16._peripheral.isTouched(buttonName);
+      });
     }
     /**
      * Update the last occured time of all gesture events.
@@ -7801,7 +7835,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "updatePrevGestureEvents",
     value: function updatePrevGestureEvents() {
-      var _this15 = this;
+      var _this17 = this;
 
       this.prevGestureEvents = {};
       Object.entries(this._peripheral.gestureEvents).forEach(function (_ref5) {
@@ -7809,7 +7843,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             gestureName = _ref6[0],
             timestamp = _ref6[1];
 
-        _this15.prevGestureEvents[gestureName] = timestamp;
+        _this17.prevGestureEvents[gestureName] = timestamp;
       });
     }
     /**
@@ -7822,13 +7856,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "whenGesture",
     value: function whenGesture(args) {
-      var _this16 = this;
+      var _this18 = this;
 
       if (!this.updateLastGestureEventTimer) {
         this.updateLastGestureEventTimer = setTimeout(function () {
-          _this16.updatePrevGestureEvents();
+          _this18.updatePrevGestureEvents();
 
-          _this16.updateLastGestureEventTimer = null;
+          _this18.updateLastGestureEventTimer = null;
         }, this.runtime.currentStepTime);
       }
 
@@ -7845,7 +7879,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {object} args - the block's arguments.
      * @param {string} args.MATRIX - the pattern of the pixels.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves after a tick.
+     * @return {?Promise} - a Promise that resolves after a tick or undefinde if yield.
      */
 
   }, {
@@ -7894,7 +7928,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {string} args.TEXT - The contents to display.
      * @param {number} args.DELAY - The time to delay between characters, in milliseconds.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves after the text is done printing.
+     * @return {Promise} - a Promise that resolves after the text is done printing or undefinde if yield.
      * Note the limit is 18 characters
      * The print time is calculated by multiplying the number of horizontal pixels
      * by the default scroll delay of 120ms.
@@ -7927,7 +7961,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * Turn all 5x5 matrix LEDs off.
      * @param {object} args - the block's arguments.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves after a tick.
+     * @return {Promise} - a Promise that resolves after a tick or undefinde if yield.
      */
 
   }, {
@@ -7976,13 +8010,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * Get loudness of the sound from microphone on micro:bit.
      * @param {object} args - the block's arguments.
      * @param {object} util - utility object provided by the runtime.
-     * @return {Promise} - a Promise that resolves digital input value of the pin.
+     * @return {Promise} - a Promise that resolves digital input value of the pin or undefinde if yield.
      */
 
   }, {
     key: "getSoundLevel",
     value: function getSoundLevel(args, util) {
-      var _this17 = this;
+      var _this19 = this;
 
       var resultPromise = this._peripheral.configMic(true, util);
 
@@ -7990,7 +8024,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
 
       return resultPromise.then(function (micState) {
         if (micState) {
-          return Math.round(_this17._peripheral.readSoundLevel() * 1000 / 255) / 10;
+          return Math.round(_this19._peripheral.readSoundLevel() * 1000 / 255) / 10;
         }
 
         return 0;
@@ -8030,7 +8064,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * Return digital value of the pin.
      * @param {object} args - the block's arguments.
      * @param {number} args.PIN - pin ID.
-     * @return {Promise} - a Promise that resolves digital input value of the pin.
+     * @return {number} - digital input value of the pin.
      */
 
   }, {
@@ -8044,7 +8078,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @property {string} args.LABEL - label of the data.
      * @property {string} args.DATA - content of the data.
      * @param {object} util - utility object provided by the runtime.
-     * @return {?Promise} - a Promise that resolves when the process was done or undefined if labels was empty.
+     * @return {?Promise} - a Promise that resolves when the process was done or undefined if this process was yield.
      */
 
   }, {
@@ -8062,13 +8096,14 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {number} args.PIN - pin ID.
      * @param {MbitMorePullModeName} args.MODE - mode to set.
      * @param {BlockUtility} util - utility object provided by the runtime.
-     * @return {undefined}
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
      */
 
   }, {
     key: "setPullMode",
     value: function setPullMode(args, util) {
-      this._peripheral.setPullMode(parseInt(args.PIN, 10), MbitMorePullModeID[args.MODE], util);
+      return this._peripheral.setPullMode(parseInt(args.PIN, 10), MbitMorePullModeID[args.MODE], util);
     }
     /**
      * Set the pin to Output mode and level.
@@ -8076,7 +8111,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {number} args.PIN - pin ID.
      * @param {boolean | string | number} args.LEVEL - value to be set.
      * @param {object} util - utility object provided by the runtime.
-     * @return {undefined}
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
      */
 
   }, {
@@ -8093,7 +8129,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
         }
       }
 
-      this._peripheral.setPinOutput(parseInt(args.PIN, 10), level, util);
+      return this._peripheral.setPinOutput(parseInt(args.PIN, 10), level, util);
     }
     /**
      * Set the pin to PWM mode and level.
@@ -8101,7 +8137,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {number} args.PIN - pin ID.
      * @param {number} args.LEVEL - value[%] for PWM.
      * @param {BlockUtility} util - utility object provided by the runtime.
-     * @return {?Promise} a Promise that resolves when command sending done or undefined if this process was yield.
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
      */
 
   }, {
@@ -8122,7 +8159,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {object} args - the block's arguments.
      * @param {number} args.PIN - pin ID.
      * @param {BlockUtility} util - utility object provided by the runtime.
-     * @return {?Promise} a Promise that resolves when command sending done or undefined if this process was yield.
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
      */
 
   }, {
@@ -8190,7 +8228,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {string} args.FREQ - wave frequency to play
      * @param {string} args.VOL laudness of tone
      * @param {object} util - utility object provided by the runtime.
-     * @return {?Promise} - a Promise that resolves to send command or undefined if this process was yield.
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
      */
 
   }, {
@@ -8205,7 +8244,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * Stop playing tone on the speaker.
      * @param {object} args - the block's arguments.
      * @param {object} util - utility object provided by the runtime.
-     * @return {?Promise} - a Promise that resolves to send command or undefined if this process was yield.
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
      */
 
   }, {
@@ -8219,7 +8259,8 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * @param {number} args.PIN - pin ID.
      * @param {string} args.EVENT_TYPE - event to listen.
      * @param {BlockUtility} util - utility object provided by the runtime.
-     * @return {?Promise} a Promise that resolves when command sending done or undefined if this process was yield.
+     * @return {promise | undefined} - a Promise that resolves when the command was sent
+     *                                 or undefined if this process was yield.
     */
 
   }, {
@@ -8250,7 +8291,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "updatePrevPinEvents",
     value: function updatePrevPinEvents() {
-      var _this18 = this;
+      var _this20 = this;
 
       this.prevPinEvents = {};
       Object.entries(this._peripheral._pinEvents).forEach(function (_ref7) {
@@ -8258,19 +8299,19 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             pinIndex = _ref8[0],
             events = _ref8[1];
 
-        _this18.prevPinEvents[pinIndex] = {};
+        _this20.prevPinEvents[pinIndex] = {};
         Object.entries(events).forEach(function (_ref9) {
           var _ref10 = _slicedToArray(_ref9, 2),
               eventID = _ref10[0],
               eventData = _ref10[1];
 
-          _this18.prevPinEvents[pinIndex][eventID] = {};
+          _this20.prevPinEvents[pinIndex][eventID] = {};
           Object.entries(eventData).forEach(function (_ref11) {
             var _ref12 = _slicedToArray(_ref11, 2),
                 key = _ref12[0],
                 value = _ref12[1];
 
-            _this18.prevPinEvents[pinIndex][eventID][key] = value;
+            _this20.prevPinEvents[pinIndex][eventID][key] = value;
           });
         });
       });
@@ -8302,13 +8343,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "whenPinEvent",
     value: function whenPinEvent(args) {
-      var _this19 = this;
+      var _this21 = this;
 
       if (!this.updateLastPinEventTimer) {
         this.updateLastPinEventTimer = setTimeout(function () {
-          _this19.updatePrevPinEvents();
+          _this21.updatePrevPinEvents();
 
-          _this19.updateLastPinEventTimer = null;
+          _this21.updateLastPinEventTimer = null;
         }, this.runtime.currentStepTime);
       }
 
@@ -8341,7 +8382,7 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "updatePrevReceivedData",
     value: function updatePrevReceivedData() {
-      var _this20 = this;
+      var _this22 = this;
 
       this.prevReceivedData = {};
       Object.entries(this._peripheral.receivedData).forEach(function (_ref13) {
@@ -8349,13 +8390,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
             label = _ref14[0],
             contentObject = _ref14[1];
 
-        _this20.prevReceivedData[label] = {};
+        _this22.prevReceivedData[label] = {};
         Object.entries(contentObject).forEach(function (_ref15) {
           var _ref16 = _slicedToArray(_ref15, 2),
               key = _ref16[0],
               value = _ref16[1];
 
-          _this20.prevReceivedData[label][key] = value;
+          _this22.prevReceivedData[label][key] = value;
         });
       });
     }
@@ -8384,13 +8425,13 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
   }, {
     key: "whenDataReceived",
     value: function whenDataReceived(args) {
-      var _this21 = this;
+      var _this23 = this;
 
       if (!this.updateLastDataTimer) {
         this.updateLastDataTimer = setTimeout(function () {
-          _this21.updatePrevReceivedData();
+          _this23.updatePrevReceivedData();
 
-          _this21.updateLastDataTimer = null;
+          _this23.updateLastDataTimer = null;
         }, this.runtime.currentStepTime);
       }
 
