@@ -8367,13 +8367,19 @@ var MbitMoreBlocks = /*#__PURE__*/function () {
      * Rerutn the last content of the messge or undefined if the data which has the label is not received.
      * @param {object} args - the block's arguments.
      * @param {number} args.LABEL - label of the data.
-     * @return {?(string | number)} - content of the data.
+     * @return {?(string | number)} - content of the data or empty string when the data was null
      */
 
   }, {
     key: "getDataLabeled",
     value: function getDataLabeled(args) {
-      return this._peripheral.getDataLabeled(args.LABEL);
+      var data = this._peripheral.getDataLabeled(args.LABEL);
+
+      if (data === null) {
+        return '';
+      }
+
+      return data;
     }
     /**
      * Update the previous occured time of all received data.
