@@ -1,15 +1,11 @@
 name: Start Dev Site
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Manual Start Dev Site'
-        # Default value if no value is explicitly provided
-        default: ''
-        # Input has to be provided for the workflow to run
-        required: false
+      branch:
+        description: 'Branch of microbit-more'
+        default: 'develop'
+        required: true
 
 jobs:
   build-deploy:
@@ -25,7 +21,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: microbit-more/mbit-more-v2
-          ref: master
+          ref: ${{github.event.inputs.branch}}
           path: ./mbit-more-v2
       - run: npx xcratch-register --link -C --id=microbitMore --gui=../scratch-gui --url="https://microbit-more.github.io/dev/dist/microbitMore.mjs"
         working-directory: ./mbit-more-v2
