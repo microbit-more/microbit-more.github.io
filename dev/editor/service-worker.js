@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-bf399525'], (function (workbox) { 'use strict';
+define(['./workbox-36b4d269'], (function (workbox) { 'use strict';
 
   /**
   * Welcome to your Workbox-powered service worker!
@@ -112,10 +112,10 @@ define(['./workbox-bf399525'], (function (workbox) { 'use strict';
     "revision": "8f44a83bc2884a3b22bf5cef34606bfb"
   }, {
     "url": "chunks/gui.js",
-    "revision": "8cd5d747932149b355939cead22dc4c2"
+    "revision": "d9bf9b1930647a1c4f4e0b559e27ff72"
   }, {
     "url": "chunks/gui.js.map",
-    "revision": "3f01e4470e4e61df481981bd848078e9"
+    "revision": "2b79057296dd6c20413b4ed76eb9cd01"
   }, {
     "url": "chunks/player.js",
     "revision": "90a5d5f3983a78552181a78aa0e74ff0"
@@ -4123,10 +4123,10 @@ define(['./workbox-bf399525'], (function (workbox) { 'use strict';
     "revision": "a93ba32a67950f762bc5343e6a24d3ab"
   }, {
     "url": "lib.min.js",
-    "revision": "5a275fb49b7ef67fa5f0ab4b29186215"
+    "revision": "d6b38ec98d3cb1561a06c886d02b7435"
   }, {
     "url": "lib.min.js.map",
-    "revision": "792dcb00c5f2c7b225df935c3c11f508"
+    "revision": "a05ace2a1a11d7cb1fab7c519eb47468"
   }, {
     "url": "player.html",
     "revision": "36ca0ff4afd1a534052df6edb8800234"
@@ -4562,6 +4562,9 @@ define(['./workbox-bf399525'], (function (workbox) { 'use strict';
   }, {
     "url": "static/assets/af2202211ca1873edb949012dab6f9d1.svg",
     "revision": "af2202211ca1873edb949012dab6f9d1"
+  }, {
+    "url": "static/assets/b1ccb1d911886b973398e4c4d1a6bb91.png",
+    "revision": "b1ccb1d911886b973398e4c4d1a6bb91"
   }, {
     "url": "static/assets/b2c44c738c9cbc1a99cd6edfd0c2b85b.svg",
     "revision": "b2c44c738c9cbc1a99cd6edfd0c2b85b"
