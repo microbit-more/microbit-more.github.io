@@ -2,34 +2,50 @@ name: Start Site
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch of microbit-more'
-        default: 'master'
+      xcratch:
+        description: "Branch of Xcratch"
+        default: "xcratch"
+        required: true
+      microBitMore:
+        description: "Branch of mbit-more-v2"
+        default: "master"
+        required: true
+      dev:
+        description: "Publish for development"
+        type: boolean
+        default: true
         required: true
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout scratch-gui
+        uses: actions/checkout@v3
         with:
           repository: xcratch/scratch-gui
-          ref: xcratch
+          ref: ${{ inputs.xcratch }}
           path: ./scratch-gui
       - run: npm install
         working-directory: ./scratch-gui
-      - uses: actions/checkout@v2
+      - name: checkout microBitMore
+        uses: actions/checkout@v3
         with:
           repository: microbit-more/mbit-more-v2
-          ref: ${{github.event.inputs.branch}}
+          ref: ${{ inputs.microBitMore }}
           path: ./mbit-more-v2
       - run: npm install
         working-directory: ./mbit-more-v2
-      - run: npx xcratch-register --id=microbitMore --gui=../scratch-gui --block=./src/vm/extensions/block --entry=./src/gui/lib/libraries/extensions/entry --core --use=extension-support util io --url="https://microbit-more.github.io/dist/microbitMore.mjs"
+      - name: register for dev
+        if: ${{ inputs.dev }}
+        run: npm run register -- --url="https://microbit-more.github.io/dev/dist/microbitMore.mjs"
         working-directory: ./mbit-more-v2
-      - run: npx xcratch-build --module=microbitMore --gui=../scratch-gui --block=./src/vm/extensions/block --entry=./src/gui/lib/libraries/extensions/entry --url="https://microbit-more.github.io/dist/microbitMore.mjs"
+      - name: register
+        if: ${{ !inputs.dev }}
+        run: npm run register -- --url="https://microbit-more.github.io/dist/microbitMore.mjs"
         working-directory: ./mbit-more-v2
-      - uses: actions/checkout@v2
+      - name: checkout site
+        uses: actions/checkout@v3
         with:
           repository: microbit-more/microbit-more.github.io
           ref: main
@@ -38,7 +54,7 @@ jobs:
         working-directory: ./microbit-more.github.io
       - run: npm run build
         working-directory: ./scratch-gui
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: microbit-more/microbit-more.github.io
           path: ./microbit-more.github.io
@@ -46,15 +62,25 @@ jobs:
       - run: mv -T ./scratch-gui/build ./public/editor
       - run: mv -T ./mbit-more-v2/dist ./public/dist
       - run: mv -T ./mbit-more-v2/examples ./public/examples
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: microbit-more/microbit-more-doc
           path: ./microbit-more-doc
       - run: mv -T ./microbit-more-doc/docs ./public/docs
       - run: mv -T ./microbit-more-doc/docs-ja ./public/docs-ja
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: publish for dev
+        if: ${{ inputs.dev }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          destination_dir: ./dev
+          keep_files: false
+      - name: publish
+        if: ${{ !inputs.dev }}
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           destination_dir: .
-          keep_files: false
+          keep_files: true
