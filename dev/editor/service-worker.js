@@ -4123,10 +4123,10 @@ define(['./workbox-b5366f8b'], (function (workbox) { 'use strict';
     "revision": "a93ba32a67950f762bc5343e6a24d3ab"
   }, {
     "url": "lib.min.js",
-    "revision": "77c6bcc839db30c6f27bf1a684f112ee"
+    "revision": "536ed8720883008887f2d771873356f2"
   }, {
     "url": "lib.min.js.map",
-    "revision": "bca4f9266d1f93816b80dd9cf3687c7c"
+    "revision": "e48cefbefb99fad5fd0adfba06a9f823"
   }, {
     "url": "player.html",
     "revision": "36ca0ff4afd1a534052df6edb8800234"
@@ -4427,6 +4427,9 @@ define(['./workbox-b5366f8b'], (function (workbox) { 'use strict';
   }, {
     "url": "static/assets/73773f78bf2bfc449218fbaee1922964.svg",
     "revision": "73773f78bf2bfc449218fbaee1922964"
+  }, {
+    "url": "static/assets/758ad81b4352478365e08a19e875c98a.png",
+    "revision": "758ad81b4352478365e08a19e875c98a"
   }, {
     "url": "static/assets/7679e8aa3b5a6b745823e00a7b950065.png",
     "revision": "7679e8aa3b5a6b745823e00a7b950065"
