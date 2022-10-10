@@ -1,6 +1,6 @@
 {
   "name": "microbit-more.github.io",
-  "version": "0.1.0",
+  "version": "0.2.5",
   "description": "Full-functional extension of micro:bit for Scratch3",
   "module": "./dist/microbitMore.mjs",
   "scripts": {
