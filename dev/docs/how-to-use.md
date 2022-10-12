@@ -5,7 +5,7 @@
 ### 1. write a program to the micro:bit
 Connect the micro:bit to your computer with a USB cable, and write the latest program for Microbit More to the micro:bit. (You only need to write the program to the micro:bit once, and after that, you can connect the micro:bit only by using Scratch.)
 
-Program for Microbit More [microbit-mbit-more-v2-0_2_4.hex](https://github.com/microbit-more/pxt-mbit-more-v2/releases/download/0.2.4/microbit-mbit-more-v2-0_2_4.hex)
+Program for Microbit More [microbit-mbit-more-v2-0_2_5.hex](https://github.com/microbit-more/pxt-mbit-more-v2/releases/download/0.2.5/microbit-mbit-more-v2-0_2_5.hex)
 
 ### 2. Adjusting the direction sensor of the micro:bit
 Immediately after writing the program, "TILT TO FILL SCREEN" will be displayed on the LED screen to adjust the direction sensor. Tilt the micro:bit back and forth, left and right, so that all the LEDs are glowing. (You will not be able to connect the scratch until you have completed this adjustment.)
