@@ -72,6 +72,9 @@ Extensions
 
 - Extensions by MakeCode
 
+### Can be used by connecting via USB
+
+When opened in a browser that supports Web Serial API (Chrome/Edge v89 or later), the micro:bit can be used without wireless connection by connecting it with a USB cable.
 
 ### Can be used offline
 

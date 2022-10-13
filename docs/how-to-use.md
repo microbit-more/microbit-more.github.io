@@ -32,6 +32,13 @@ When the connection is established, press the "Go to Editor" button.
 
 Click "Show pattern ♡" to see which micro:bit is connected.
 
+## Connect micro:bit via USB
+
+1. Open https://microbit-more.github.io/editor in a browser that supports Web Serial API (Chrome/Edge v89 or later).
+2. Connect the micro:bit to the PC with a USB cable.
+3. Hold down the Shift key and click the Connect button.
+4. Select the micro:bit from the list of serial ports and connect it.
+
 ____
 ## Use it offline
 
