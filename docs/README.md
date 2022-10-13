@@ -33,7 +33,7 @@ However, the micro:bit v1.3, v1.5 cannot use blocks related to "data communicati
 - Safari (Using Scratch Link)
 
 #### iPad
-- [‎Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>Enter https://microbit-more.github.io/editor/ in the Home URL "Custom" field in the Settings screen.
+- [Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>Enter https://microbit-more.github.io/editor/ in the Home URL "Custom" field in the Settings screen.
 ____
 ## Features
 

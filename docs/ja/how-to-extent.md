@@ -9,7 +9,7 @@ micro:bit と Scratch の間でラベル付きデータを送受信して通信�
 - micro:bit が受け取ることのできるラベルの種類は16種
 
 ## micro:bit 側のプログラム
-Microbit More の入った MakeCode プロジェクト [mbit-more-v2-0_2_4](https://makecode.microbit.org/_eeL8JxCj8L1K) を開いてプログラムを編集します。(コンパイルには3分ほどかかります。)
+Microbit More の入った MakeCode プロジェクト [mbit-more-v2-0_2_5](https://makecode.microbit.org/_9txRj2APL1Wq) を開いてプログラムを編集します。(コンパイルには3分ほどかかります。)
 
 MakeCode の中で Scratch とのデータのやり取りに使えるのは以下のブロックです。
 
