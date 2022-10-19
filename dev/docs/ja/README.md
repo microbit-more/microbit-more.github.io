@@ -32,7 +32,7 @@ micro:bit v1.3, v1.5, v2.0 で利用できます。
 - Safari (Scratch Link利用)
 
 #### iPad
-- [‎Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>設定画面のホームURL「カスタム」に https://microbit-more.github.io/editor/ と入力します。
+- [Scrub](https://apps.apple.com/jp/app/scrub-web-browser/id1569777095) <br>設定画面のホームURL「カスタム」に https://microbit-more.github.io/editor/ と入力します。
 
 ## 特徴
 
@@ -70,6 +70,9 @@ micro:bit v1.3, v1.5, v2.0 で利用できます。
 
 - MakeCodeによる機能拡張
 
+### USBでつないで利用可能
+
+Web Serial API に対応しているブラウザ(Chrome/Edge v89以降)で開くと、 micro:bit をUSBケーブルで接続して無線を使わずに利用できます。
 
 ### オフラインで利用可能
 

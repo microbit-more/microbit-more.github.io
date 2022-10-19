@@ -32,6 +32,14 @@ Microbit More 用プログラム [microbit-mbit-more-v2-0_2_5.hex](https://githu
 
 「パターン ♡ を表示する」をクリックして、どの micro:bit と接続されたのかを確認してみましょう。
 
+## USBで micro:bit をつなぐ
+
+1. Web Serial API に対応しているブラウザ(Chrome/Edge v89以降)で https://microbit-more.github.io/editor を開きます。
+2. micro:bit をUSBケーブルでPCにつなぎます。
+3. シフトキーを押しながらコネクトボタンをクリックします。
+4. シリアルポートの一覧から micro:bit を選んで接続します。
+
+
 ____
 ## オフラインで使う
 
