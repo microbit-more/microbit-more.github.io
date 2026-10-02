@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
     inputs:
       xcratch:
-        description: "Branch of Xcratch"
-        default: "xcratch"
+        description: "Branch of xcratch/scratch-editor"
+        default: "xcratch.github.io"
         required: true
       microBitMore:
         description: "Branch of mbit-more-v2"
@@ -16,63 +16,81 @@ on:
         default: true
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Inputs
         run: echo "${{ toJSON(inputs) }}"
-      - name: checkout scratch-gui
-        uses: actions/checkout@v3
+      - name: checkout scratch-editor
+        uses: actions/checkout@v4
         with:
-          repository: xcratch/scratch-gui
+          repository: xcratch/scratch-editor
           ref: ${{ inputs.xcratch }}
-          path: ./scratch-gui
-      - run: npm install
-        working-directory: ./scratch-gui
+          path: ./scratch-editor
       - name: checkout microBitMore
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: microbit-more/mbit-more-v2
           ref: ${{ inputs.microBitMore }}
           path: ./mbit-more-v2
-      - run: npm install
-        working-directory: ./mbit-more-v2
-      - name: register for dev
-        if: ${{ inputs.dev }}
-        run: npm run register -- --url="https://microbit-more.github.io/dev/dist/microbitMore.mjs"
-        working-directory: ./mbit-more-v2
-      - name: register
-        if: ${{ !inputs.dev }}
-        run: npm run register -- --url="https://microbit-more.github.io/dist/microbitMore.mjs"
-        working-directory: ./mbit-more-v2
       - name: checkout site
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: microbit-more/microbit-more.github.io
           ref: main
           path: ./microbit-more.github.io
-      - run: node ./scripts/tailoring.js -gui=../scratch-gui
-        working-directory: ./microbit-more.github.io
-      - run: npm run build
-        working-directory: ./scratch-gui
-      - uses: actions/checkout@v3
-        with:
-          repository: microbit-more/microbit-more.github.io
-          path: ./microbit-more.github.io
-      - run: mv -T ./microbit-more.github.io/site ./public
-      - run: mv -T ./scratch-gui/build ./public/editor
-      - run: mv -T ./mbit-more-v2/dist ./public/dist
-      - run: mv -T ./mbit-more-v2/examples ./public/examples
-      - uses: actions/checkout@v3
+      - name: checkout docs
+        uses: actions/checkout@v4
         with:
           repository: microbit-more/microbit-more-doc
           path: ./microbit-more-doc
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ./scratch-editor/.nvmrc
+      - name: install system libraries for canvas
+        run: |
+          # scratch-paint -> paper.js -> canvas
+          missing_libraries="$(
+            ldconfig -p | grep -q 'libcairo\.so' || echo libcairo2-dev
+            pkg-config pangocairo || echo libpango1.0-dev
+            pkg-config libssl || echo libssl-dev
+            pkg-config libjpeg || echo libjpeg-dev
+            test -f /usr/include/gif_lib.h || echo libgif-dev
+          )"
+          echo "Missing libraries: [$missing_libraries]"
+          if [ -n "$missing_libraries" ]; then
+            sudo apt update
+            sudo apt install -y $missing_libraries
+          fi
+      - run: NODE_ENV=development npm ci
+        working-directory: ./scratch-editor
+      - run: npm ci
+        working-directory: ./mbit-more-v2
+      - name: register for dev
+        if: ${{ inputs.dev }}
+        run: node ./scripts/register-extension.js --editor=../scratch-editor --ext=../mbit-more-v2 --url="https://microbit-more.github.io/dev/dist/microbitMore.mjs" --core
+        working-directory: ./microbit-more.github.io
+      - name: register
+        if: ${{ !inputs.dev }}
+        run: node ./scripts/register-extension.js --editor=../scratch-editor --ext=../mbit-more-v2 --url="https://microbit-more.github.io/dist/microbitMore.mjs" --core
+        working-directory: ./microbit-more.github.io
+      - run: node ./scripts/tailoring.js --editor=../scratch-editor
+        working-directory: ./microbit-more.github.io
+      - run: npm run build
+        working-directory: ./scratch-editor
+      - run: mv -T ./microbit-more.github.io/site ./public
+      - run: mv -T ./scratch-editor/packages/scratch-gui/build ./public/editor
+      - run: mv -T ./mbit-more-v2/dist ./public/dist
+      - run: mv -T ./mbit-more-v2/examples ./public/examples
       - run: mv -T ./microbit-more-doc/docs ./public/docs
       - run: mv -T ./microbit-more-doc/docs-ja ./public/docs-ja
       - name: publish for dev
         if: ${{ inputs.dev }}
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
@@ -80,7 +98,7 @@ jobs:
           keep_files: false
       - name: publish
         if: ${{ !inputs.dev }}
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public

@@ -1,54 +1,60 @@
 const path = require('path');
 const fs = require('fs');
-const { execSync } = require('child_process')
 
 function getArgs () {
     const args = {};
-    process.argv
-        .slice(2, process.argv.length)
-        .forEach( arg => {
-            if (arg.slice(0,2) === '--') {
-                // long arg
-                const longArg = arg.split('=');
-                const longArgFlag = longArg[0].slice(2,longArg[0].length);
-                const longArgValue = longArg.length > 1 ? longArg[1] : true;
-                args[longArgFlag] = longArgValue;
-            }
-            else if (arg[0] === '-') {
-                // flags
-                const flags = arg.slice(1,arg.length).split('');
-                flags.forEach(flag => {
-                    args[flag] = true;
-                });
-            }
-        });
+    process.argv.slice(2).forEach(arg => {
+        const m = arg.match(/^--?([^=]+)(?:=(.*))?$/);
+        if (m) args[m[1]] = m[2] === undefined ? true : m[2];
+    });
     return args;
 }
 
 const args = getArgs();
 
-const GuiRoot = args['gui'] ?
-    path.resolve(process.cwd(), args['gui'])
-    : path.resolve(__dirname, '../../scratch-gui');
+// Root of the xcratch/scratch-editor monorepo (use -editor=... or the legacy -gui=<path to scratch-gui>)
+const GuiRoot = args.gui ?
+    path.resolve(process.cwd(), args.gui) :
+    path.resolve(process.cwd(), args.editor || '../scratch-editor', 'packages/scratch-gui');
+
+const SiteUrl = 'https://microbit-more.github.io/';
 
 // Change images
-try {
-    fs.copyFileSync(path.resolve(__dirname, '../editor/static/scratch-logo.svg'), path.resolve(GuiRoot, 'src/components/menu-bar/scratch-logo.svg'));
-    console.log(`Overwrote scratch-logo.svg`);
-    fs.copyFileSync(path.resolve(__dirname, '../editor/static/favicon.ico'), path.resolve(GuiRoot, 'static/favicon.ico'));
-    console.log(`Overwrote editor favicon.ico`);
-    fs.copyFileSync(path.resolve(__dirname, '../editor/static/pwa-icon.png'), path.resolve(GuiRoot, 'static/pwa-icon.png'));
-    console.log(`Overwrote pwa-icon.png `);
-    fs.copyFileSync(path.resolve(__dirname, '../editor/static/pwa-maskable_icon.png'), path.resolve(GuiRoot, 'static/pwa-maskable_icon.png'));
-    console.log(`Overwrote pwa-maskable_icon.png `);
-} catch (err) {
-    console.error(err);
-}
+const copies = [
+    ['../editor/static/scratch-logo.svg', 'src/components/menu-bar/scratch-logo.svg'],
+    ['../editor/static/favicon.ico', 'static/favicon.ico'],
+    ['../editor/static/pwa-icon.png', 'static/pwa-icon.png'],
+    ['../editor/static/pwa-maskable_icon.png', 'static/pwa-maskable_icon.png']
+];
+copies.forEach(([from, to]) => {
+    fs.copyFileSync(path.resolve(__dirname, from), path.resolve(GuiRoot, to));
+    console.log(`Overwrote ${to}`);
+});
 
-// Applay patch to scratch-gui
-try {
-    execSync(`cd ${GuiRoot} && patch -p1 -N -s --no-backup-if-mismatch < ${path.resolve(__dirname, 'tailoring/tailoring-gui.patch')}`);
-    console.log(`Applied tailoring-gui.patch')}`);
-} catch (err) {
-    console.error(err);
-}
+// Replace text. Fails if the pattern is not found, to notice upstream changes.
+const patch = (file, replacements) => {
+    const target = path.resolve(GuiRoot, file);
+    let code = fs.readFileSync(target, 'utf-8');
+    replacements.forEach(([from, to]) => {
+        if (!code.includes(from)) {
+            throw new Error(`"${from}" not found in ${file}`);
+        }
+        code = code.split(from).join(to);
+    });
+    fs.writeFileSync(target, code);
+    console.log(`Patched ${file}`);
+};
+
+patch('src/components/stage-header/stage-header.jsx', [
+    ['href="https://xcratch.github.io"', `href="${SiteUrl}"`]
+]);
+patch('src/playground/render-gui.jsx', [
+    ["window.location = 'https://xcratch.github.io';", `window.location = '${SiteUrl}';`]
+]);
+patch('webpack.config.js', [
+    ["short_name: 'Xcratch',", "short_name: 'Microbit More',"],
+    ["\n            name: 'Xcratch',", "\n            name: 'Microbit More',"],
+    ["description: 'Extendable Scratch3 mod'", "description: 'Scratch3 mod for micro:bit'"],
+    ["'apple-mobile-web-app-title': 'Xcratch'", "'apple-mobile-web-app-title': 'Microbit More'"],
+    ["title: 'Scratch 3.0 GUI'\n", "title: 'Microbit More'\n"]
+]);
