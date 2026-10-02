@@ -73,11 +73,12 @@ micro:bit v1.3, v1.5, v2.0 で利用できます。
 ### USBでつないで利用可能
 
 Web Serial API に対応しているブラウザ(Chrome/Edge v89以降)で開くと、 micro:bit をUSBケーブルで接続して無線を使わずに利用できます。
+([使い方/USBで micro:bit をつなぐ](how-to-use?id=usb%e3%81%a7-microbit-%e3%82%92%e3%81%a4%e3%81%aa%e3%81%90) を参照)
 
 ### オフラインで利用可能
 
 Microbit MoreエディターはPWA(Progressive Web Apps)になっているので、オフラインで利用できます。
-([使い方](how-to-use?id=%e3%82%aa%e3%83%95%e3%83%a9%e3%82%a4%e3%83%b3%e3%81%a7%e4%bd%bf%e3%81%86) を参照)
+([使い方/オフラインで使う](how-to-use?id=%e3%82%aa%e3%83%95%e3%83%a9%e3%82%a4%e3%83%b3%e3%81%a7%e4%bd%bf%e3%81%86) を参照)
 
 ## 変更履歴
 

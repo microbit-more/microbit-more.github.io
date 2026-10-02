@@ -75,11 +75,13 @@ Extensions
 ### Can be used by connecting via USB
 
 When opened in a browser that supports Web Serial API (Chrome/Edge v89 or later), the micro:bit can be used without wireless connection by connecting it with a USB cable.
+(See [How to Use/Connect micro:bit via USB](how-to-use?id=connect-microbit-via-usb))
+
 
 ### Can be used offline
 
 The Microbit More editor is a PWA (Progressive Web Apps), so you can use it offline.
-(See [how-to-use](how-to-use?id=use-it-offline))
+(See [how-to-use/Use it Offline](how-to-use?id=use-it-offline))
 
 ____
 ## Changes
