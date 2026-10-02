@@ -28,12 +28,10 @@ var translations$1 = {
 }
 };
 
-var version$1 = "0.3.2";
-
 var formatMessage$1 = function formatMessage(messageData) {
   return messageData.defaultMessage;
 };
-var version = "v2-".concat(version$1);
+var version = 'v2-0.2.5';
 var entry = {
   get name() {
     return "".concat(formatMessage$1({
@@ -593,25 +591,8 @@ function requireCast() {
       _classCallCheck(this, Cast);
     }
     return _createClass(Cast, null, [{
-      key: "normalizeNumberString",
+      key: "toNumber",
       value:
-      /**
-       * Normalize full-width digits/signs to half-width for number parsing.
-       * Non-string values are returned unchanged.
-       * @param {*} value Value to normalize.
-       * @returns {*} Normalized value.
-       */
-      function normalizeNumberString(value) {
-        if (typeof value === 'string') {
-          // Replace full-width numbers with half-width ones.
-          value = value.replace(/[０-９＋．ｅ]/g, function (s) {
-            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-          });
-          value = value.replace(/[-－﹣−‐⁃‑‒–—﹘―⎯⏤ーｰ─━]/g, '-');
-        }
-        return value;
-      }
-
       /**
        * Scratch cast to number.
        * Treats NaN as 0.
@@ -619,9 +600,7 @@ function requireCast() {
        * @param {*} value Value to cast to number.
        * @returns {number} The Scratch-casted number value.
        */
-    }, {
-      key: "toNumber",
-      value: function toNumber(value) {
+      function toNumber(value) {
         // If value is already a number we don't need to coerce it with
         // Number().
         if (typeof value === 'number') {
@@ -632,7 +611,13 @@ function requireCast() {
           }
           return value;
         }
-        value = Cast.normalizeNumberString(value);
+        if (typeof value === 'string') {
+          // Replace full-width numbers with half-width ones.
+          value = value.replace(/[０-９＋．ｅ]/g, function (s) {
+            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+          });
+          value = value.replace(/[-－﹣−‐⁃‑‒–—﹘―⎯⏤ーｰ─━]/g, '-');
+        }
         var n = Number(value);
         if (Number.isNaN(n)) {
           // Scratch treats NaN as 0, when needed as a number.
@@ -737,8 +722,8 @@ function requireCast() {
     }, {
       key: "compare",
       value: function compare(v1, v2) {
-        var n1 = Number(Cast.normalizeNumberString(v1));
-        var n2 = Number(Cast.normalizeNumberString(v2));
+        var n1 = Number(v1);
+        var n2 = Number(v2);
         if (n1 === 0 && Cast.isWhiteSpace(v1)) {
           n1 = NaN;
         } else if (n2 === 0 && Cast.isWhiteSpace(v2)) {
@@ -4617,14 +4602,14 @@ function requireSerialWeb() {
       this.sendDataInterval = 10; // Time for receiving process in micro:bit
 
       /**
-       * Store of received type and value for each characteristics: { ch: { type: value } }.
-       * @type {Object.<number, Object.<number, Uint8Array>>}
+       * Store of received type and value for each characteristics.
+       * @type {Object.<number, Object.<number, Uint8Array>>} - { ch: { type: value }}.
        */
       this.chValues = {};
 
       /**
-       * Notification callbacks: { ch: callback }.
-       * @type {Object.<number, function>}
+       * Notification callbacks.
+       * @type {Object.<number, function>} - { ch: callback }
        */
       this.notifyListeners = {};
       this.requestPeripheral();
@@ -5163,88 +5148,6 @@ function requireSerialWeb() {
 var serialWebExports = requireSerialWeb();
 var WebSerial = /*@__PURE__*/getDefaultExportFromCjs(serialWebExports);
 
-/**
- * MbitMore button state bit index map
- */
-var BUTTON_STATE_INDEX = {
-  P0: 0,
-  P1: 1,
-  P2: 2,
-  A: 3,
-  B: 4,
-  LOGO: 5
-};
-
-/**
- * Parse binary state data buffer from micro:bit.
- * @param {DataView} dataView - DataView of the state buffer (8 bytes)
- * @param {Array<number>} gpioPins - List of GPIO pin numbers to extract
- * @returns {object} Parsed state data
- */
-var parseStateData = function parseStateData(dataView) {
-  var gpioPins = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [0, 1, 2, 8, 12, 13, 14, 15, 16];
-  if (!dataView || dataView.byteLength < 7) {
-    return null;
-  }
-  var gpioData = dataView.getUint32(0, true);
-  var digitalLevel = {};
-  for (var i = 0; i < gpioPins.length; i++) {
-    var pin = gpioPins[i];
-    digitalLevel[pin] = gpioData >> pin & 1;
-  }
-  var buttonState = {};
-  Object.keys(BUTTON_STATE_INDEX).forEach(function (name) {
-    buttonState[name] = gpioData >> 24 + BUTTON_STATE_INDEX[name] & 1;
-  });
-  var lightLevel = dataView.getUint8(4);
-  var temperature = dataView.getUint8(5) - 128;
-  var soundLevel = dataView.getUint8(6);
-  return {
-    digitalLevel: digitalLevel,
-    buttonState: buttonState,
-    lightLevel: lightLevel,
-    temperature: temperature,
-    soundLevel: soundLevel
-  };
-};
-
-/**
- * The unit-value of the gravitational acceleration from Micro:bit.
- * @type {number}
- */
-var G = 1024;
-
-/**
- * Parse motion data buffer (20 bytes) from micro:bit.
- * @param {DataView} dataView - DataView of the motion buffer
- * @returns {object|null} Parsed motion parameters or null if invalid
- */
-var parseMotionData = function parseMotionData(dataView) {
-  if (!dataView || dataView.byteLength < 18) {
-    return null;
-  }
-  var pitch = Math.round(dataView.getInt16(0, true) * 180 / Math.PI / 1000);
-  var roll = Math.round(dataView.getInt16(2, true) * 180 / Math.PI / 1000);
-  var acceleration = {
-    x: 1000 * dataView.getInt16(4, true) / G,
-    y: 1000 * dataView.getInt16(6, true) / G,
-    z: 1000 * dataView.getInt16(8, true) / G
-  };
-  var compassHeading = dataView.getUint16(10, true);
-  var magneticForce = {
-    x: dataView.getInt16(12, true),
-    y: dataView.getInt16(14, true),
-    z: dataView.getInt16(16, true)
-  };
-  return {
-    pitch: pitch,
-    roll: roll,
-    acceleration: acceleration,
-    compassHeading: compassHeading,
-    magneticForce: magneticForce
-  };
-};
-
 var uint8ArrayToBase64 = function uint8ArrayToBase64(array) {
   return window.btoa(String.fromCharCode.apply(String, _toConsumableArray$1(array)));
 };
@@ -5468,6 +5371,12 @@ var AxisSymbol$1 = {
 };
 
 /**
+ * The unit-value of the gravitational acceleration from Micro:bit.
+ * @type {number}
+ */
+var G = 1024;
+
+/**
  * Manage communication with a MicroBit peripheral over a Scrath Link client socket.
  */
 var MicrobitMore = /*#__PURE__*/function () {
@@ -5519,7 +5428,7 @@ var MicrobitMore = /*#__PURE__*/function () {
 
     /**
      * The most recently received button events for each buttons.
-     * @type {Object}
+     * @type {Object} - Store of buttons which has events.
      * @private
      */
     this.buttonEvents = {};
@@ -5528,22 +5437,22 @@ var MicrobitMore = /*#__PURE__*/function () {
     });
 
     /**
-     * The most recently received gesture events: gesture ID to timestamp.
-     * @type {Object.<number, number>}
+     * The most recently received gesture events.
+     * @type {Object <number, number>} - Store of gesture ID and timestamp.
      * @private
      */
     this.gestureEvents = {};
 
     /**
      * The most recently received events for each pin.
-     * @type {Object}
+     * @type {Object} - Store of pins which has events.
      * @private
      */
     this._pinEvents = {};
 
     /**
      * The most recently received data from micro:bit.
-     * @type {Object}
+     * @type {Object} - Store of received data
      * @private
      */
     this.receivedData = {};
@@ -5824,7 +5733,7 @@ var MicrobitMore = /*#__PURE__*/function () {
           var data = base64ToUint8Array(result.message);
           var dataView = new DataView(data.buffer, 0);
           _this3.analogValue[pinIndex] = dataView.getUint16(0, true);
-          _this3.analogInLastUpdated[pinIndex] = Date.now();
+          _this3.analogInLastUpdated = Date.now();
           resolve(_this3.analogValue[pinIndex]);
         });
       });
@@ -5853,14 +5762,17 @@ var MicrobitMore = /*#__PURE__*/function () {
           if (!result) return resolve(_this4);
           var data = base64ToUint8Array(result.message);
           var dataView = new DataView(data.buffer, 0);
-          var parsed = parseStateData(dataView, _this4.gpio);
-          if (parsed) {
-            _this4.digitalLevel = parsed.digitalLevel;
-            _this4.buttonState = parsed.buttonState;
-            _this4.lightLevel = parsed.lightLevel;
-            _this4.temperature = parsed.temperature;
-            _this4.soundLevel = parsed.soundLevel;
+          // Digital Input
+          var gpioData = dataView.getUint32(0, true);
+          for (var i = 0; i < _this4.gpio.length; i++) {
+            _this4.digitalLevel[_this4.gpio[i]] = gpioData >> _this4.gpio[i] & 1;
           }
+          Object.keys(MbitMoreButtonStateIndex).forEach(function (name) {
+            _this4.buttonState[name] = gpioData >> 24 + MbitMoreButtonStateIndex[name] & 1;
+          });
+          _this4.lightLevel = dataView.getUint8(4);
+          _this4.temperature = dataView.getUint8(5) - 128;
+          _this4.soundLevel = dataView.getUint8(6);
           _this4.resetConnectionTimeout();
           resolve(_this4);
         });
@@ -5985,14 +5897,17 @@ var MicrobitMore = /*#__PURE__*/function () {
           if (!result) return resolve(_this6);
           var data = base64ToUint8Array(result.message);
           var dataView = new DataView(data.buffer, 0);
-          var parsed = parseMotionData(dataView);
-          if (parsed) {
-            _this6.pitch = parsed.pitch;
-            _this6.roll = parsed.roll;
-            _this6.acceleration = parsed.acceleration;
-            _this6.compassHeading = parsed.compassHeading;
-            _this6.magneticForce = parsed.magneticForce;
-          }
+          // Accelerometer
+          _this6.pitch = Math.round(dataView.getInt16(0, true) * 180 / Math.PI / 1000);
+          _this6.roll = Math.round(dataView.getInt16(2, true) * 180 / Math.PI / 1000);
+          _this6.acceleration.x = 1000 * dataView.getInt16(4, true) / G;
+          _this6.acceleration.y = 1000 * dataView.getInt16(6, true) / G;
+          _this6.acceleration.z = 1000 * dataView.getInt16(8, true) / G;
+          // Magnetometer
+          _this6.compassHeading = dataView.getUint16(10, true);
+          _this6.magneticForce.x = dataView.getInt16(12, true);
+          _this6.magneticForce.y = dataView.getInt16(14, true);
+          _this6.magneticForce.z = dataView.getInt16(16, true);
           _this6.resetConnectionTimeout();
           resolve(_this6);
         });
@@ -6595,18 +6510,8 @@ var formatMessage = function formatMessage(messageData) {
  */
 var setupTranslations = function setupTranslations() {
   var localeSetup = formatMessage.setup();
-  if (!localeSetup) return;
-  var currentLocale = localeSetup.locale;
-  if (!currentLocale) return;
-
-  // Try exact match first, then fall back to base locale (e.g., 'de-DE' -> 'de')
-  var baseLocale = currentLocale.split('-')[0].split('_')[0];
-  var translationKey = translations[currentLocale] ? currentLocale : null;
-  if (!translationKey && baseLocale !== currentLocale) {
-    translationKey = translations[baseLocale] ? baseLocale : null;
-  }
-  if (localeSetup.translations[currentLocale] && translationKey) {
-    Object.assign(localeSetup.translations[currentLocale], translations[translationKey]);
+  if (localeSetup && localeSetup.translations[localeSetup.locale]) {
+    Object.assign(localeSetup.translations[localeSetup.locale], translations[localeSetup.locale]);
   }
 };
 var EXTENSION_ID = 'microbitMore';
@@ -6753,26 +6658,26 @@ var MicrobitMoreBlocks = /*#__PURE__*/function () {
     this.microbit = new MicrobitMore(this.runtime, MicrobitMoreBlocks.EXTENSION_ID);
 
     /**
-     * The previous timestamps of button events: button ID to object with event and timestamp.
-     * @type {Object.<number, Object.<number, number>>}
+     * The previous timestamps of button events.
+     * @type {Object.<number, Object.<number, number>>} button ID to object with event and timestamp.
      */
     this.prevButtonEvents = {};
 
     /**
-     * The previous timestamps of gesture events: event ID to timestamp.
-     * @type {Object.<number, number>}
+     * The previous timestamps of gesture events.
+     * @type {Object.<number, number>} key: event ID, value: timestamp.
      */
     this.prevGestureEvents = {};
 
     /**
-     * The previous timestamps of pin events: pin index to object with event and timestamp.
-     * @type {Object.<number, Object.<number, number>>}
+     * The previous timestamps of pin events.
+     * @type {Object.<number, Object.<number, number>>} pin index to object with event and timestamp.
      */
     this.prevPinEvents = {};
 
     /**
      * The previous timestamps of messages.
-     * @type {Object.<number, Object>}
+     * @type {Object.<number, Object>} pin index to object with event and timestamp.
      */
     this.prevReceivedData = {};
   }

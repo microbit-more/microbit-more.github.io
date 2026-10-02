@@ -28,12 +28,10 @@ var translations$1 = {
 }
 };
 
-var version$1 = "0.3.2";
-
 var formatMessage$1 = function formatMessage(messageData) {
   return messageData.defaultMessage;
 };
-var version = "v2-".concat(version$1);
+var version = 'v2-0.2.5';
 var entry = {
   get name() {
     return "".concat(formatMessage$1({
