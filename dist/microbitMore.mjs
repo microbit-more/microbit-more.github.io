@@ -593,25 +593,8 @@ function requireCast() {
       _classCallCheck(this, Cast);
     }
     return _createClass(Cast, null, [{
-      key: "normalizeNumberString",
+      key: "toNumber",
       value:
-      /**
-       * Normalize full-width digits/signs to half-width for number parsing.
-       * Non-string values are returned unchanged.
-       * @param {*} value Value to normalize.
-       * @returns {*} Normalized value.
-       */
-      function normalizeNumberString(value) {
-        if (typeof value === 'string') {
-          // Replace full-width numbers with half-width ones.
-          value = value.replace(/[０-９＋．ｅ]/g, function (s) {
-            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-          });
-          value = value.replace(/[-－﹣−‐⁃‑‒–—﹘―⎯⏤ーｰ─━]/g, '-');
-        }
-        return value;
-      }
-
       /**
        * Scratch cast to number.
        * Treats NaN as 0.
@@ -619,9 +602,7 @@ function requireCast() {
        * @param {*} value Value to cast to number.
        * @returns {number} The Scratch-casted number value.
        */
-    }, {
-      key: "toNumber",
-      value: function toNumber(value) {
+      function toNumber(value) {
         // If value is already a number we don't need to coerce it with
         // Number().
         if (typeof value === 'number') {
@@ -632,7 +613,13 @@ function requireCast() {
           }
           return value;
         }
-        value = Cast.normalizeNumberString(value);
+        if (typeof value === 'string') {
+          // Replace full-width numbers with half-width ones.
+          value = value.replace(/[０-９＋．ｅ]/g, function (s) {
+            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+          });
+          value = value.replace(/[-－﹣−‐⁃‑‒–—﹘―⎯⏤ーｰ─━]/g, '-');
+        }
         var n = Number(value);
         if (Number.isNaN(n)) {
           // Scratch treats NaN as 0, when needed as a number.
@@ -737,8 +724,8 @@ function requireCast() {
     }, {
       key: "compare",
       value: function compare(v1, v2) {
-        var n1 = Number(Cast.normalizeNumberString(v1));
-        var n2 = Number(Cast.normalizeNumberString(v2));
+        var n1 = Number(v1);
+        var n2 = Number(v2);
         if (n1 === 0 && Cast.isWhiteSpace(v1)) {
           n1 = NaN;
         } else if (n2 === 0 && Cast.isWhiteSpace(v2)) {
